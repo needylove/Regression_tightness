@@ -13,7 +13,6 @@ def TOT(features, gt,  d_size=8, sample_size = 200):
     """
     Features: a certain layer's features
     gt: pixel-wise ground truth values, in depth estimation, gt.size()= n, h, w
-    mask: In case values of some pixels do not exist. For depth estimation, there are some pixels lack the ground truth values
     """
     f_n, f_c, f_h, f_w = features.size()
 
@@ -23,11 +22,11 @@ def TOT(features, gt,  d_size=8, sample_size = 200):
 
     gt = F.interpolate(gt, size=[f_h // d_size, f_w // d_size], mode='nearest')
 
-    # gt = gt.view(-1)
-    # _mask = gt > 0.001
-    # _mask = _mask.to(torch.bool)
-    # gt = gt[_mask]
-    # features = features[_mask, :]
+    gt = gt.view(-1)   
+    _mask = gt > 0.001     # _mask: In case values of some pixels do not exist. For depth estimation, there are some pixels that lack the ground truth values
+    _mask = _mask.to(torch.bool)   
+    gt = gt[_mask]
+    features = features[_mask, :]
 
 
     gt = torch.unsqueeze(gt, dim=1)
@@ -53,11 +52,11 @@ def TOT(features, gt,  d_size=8, sample_size = 200):
     C_y = euclidean_dist(gt, gt)
     C_y = C_y / torch.max(C_y)
     C_y = C_y + addition
-    T_y = ot.sinkhorn(uniform_dist, uniform_dist, C_y, 0.1)
+    T_y = ot.sinkhorn(uniform_dist, uniform_dist, C_y, 0.1)  # You can change 0.1 to a smaller value for better performance, yet a too-small value will easily result in NaN
     T_z = ot.sinkhorn(uniform_dist, uniform_dist, C_z, 0.1)
 
     loss = torch.sum(C_z * T_y) - torch.sum(C_z *T_z)
-    loss = torch.abs(loss)
+    loss = torch.abs(loss)      # Please set a large weight for the loss (e.g., 100 in Age-DB for age estimation)
     return loss
 
 
