@@ -1,6 +1,6 @@
 """
 Aug 16, 2024.
-Optimal Transport method to tighten the feature space
+Optimal Transport method to tighten the feature space.
 """
 import torch
 import ot
