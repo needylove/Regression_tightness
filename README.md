@@ -7,6 +7,6 @@ Throughout training, the representation (node) typically moves either toward or 
 
 ## Experiments on the real-world and synthetic datasets
 
-You can use ICLR25_OT.py in the same way as using OrdinalEntropy.py/ PH_Reg.py in [OrdinalEntropy](https://github.com/needylove/OrdinalEntropy)/ [Ph-Reg](https://github.com/needylove/PH-Reg). Please follow the instructions in OrdinalEntropy or Ph-Reg for details experiment settings.
+You can use ICLR25_OT.py in the same way as OrdinalEntropy.py or PH_Reg.py from [OrdinalEntropy](https://github.com/needylove/OrdinalEntropy)/ [Ph-Reg](https://github.com/needylove/PH-Reg). Please refer to the instructions provided in the OrdinalEntropy or PH-Reg for detailed experimental settings.
 
 
